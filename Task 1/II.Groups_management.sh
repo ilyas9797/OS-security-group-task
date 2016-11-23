@@ -13,22 +13,26 @@ function add_group
 {
 	echo "Введите название для новой группы."
 	read new_group_name
-	addgroup "$new_group_name"
-	if [ $? -eq 0 ]
+	groupadd "$new_group_name"
+	result=$?
+	if [ $result -eq 0 ]
 	then
 		echo "Успешно."
 	fi
+	return $result
 }
 
 function delete_group
 {
 	echo "Введите название группы, которую хотите удалить."
 	read group_to_delete
-	delgroup "$group_to_delete"
-	if [ $? -eq 0 ]
+	groupdel "$group_to_delete"
+	result=$?
+	if [ $result -eq 0 ]
 	then
 		echo "Успешно."
 	fi
+	return $result
 }
 
 function change_group
@@ -48,7 +52,6 @@ function get_user
 	read potential_user
 	cut -d: -f1,3 /etc/passwd | tr : " " | contains $potential_user
 	result=$?
-	if [ 
 	return $?
 }
 
