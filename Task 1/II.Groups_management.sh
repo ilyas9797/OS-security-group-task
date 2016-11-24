@@ -2,11 +2,16 @@
 
 # Импорт полезных функций.
 . Menu.sh
-. Utility.sh
 
 function groups_management
 {
-	echo "Not doen"
+	title='Меню управления группами.'
+	help_info='Здесь вы можете добавлять, удалять группы и изменять их состав'
+	quit='В главное меню.'
+	option1='Добавить группу.'
+	option2='Удалить группу.'
+	option3='Изменить состав группы.'
+	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" add_group "$option2" delete_group "$option3" change_group
 }
 
 function add_group
@@ -38,11 +43,13 @@ function delete_group
 function change_group
 {
 	title="Изменение состава группы."
+	help_info='Здесь вы можете изменить состав групп.'
 	option1="Добавить пользователя в группу."
 	option2="Удалить пользователя из группы."
-	menu --title=$title $option1 add_user_to_group $option2 delete_user_from_group
+	menu --title="$title" --help="$help_info" "$option1" add_user_to_group "$option2" delete_user_from_group
 }
 
+# НЕ НУЖНА
 # Просит пользователя ввести пользователя.
 # Возвращает 0, если пользователь существует,
 # 1 в противном случае.
@@ -55,6 +62,7 @@ function get_user
 	return $?
 }
 
+# НЕ НУЖНА
 # Аналогично для групп.
 function get_group
 {
@@ -69,10 +77,12 @@ function add_user_to_group
 	echo "Введите группу и пользователя, которого хотите добавить в эту группу(через пробел)."
 	read group user
 	useradd -aG -- "$user" "$group"
-	if [ $? -eq 0 ]
+	result=$?
+	if [ $result -eq 0 ]
 	then
 		echo "Успешно."
 	fi
+	return $result
 }
 
 function delete_user_from_group
@@ -80,8 +90,10 @@ function delete_user_from_group
 	echo "Введите группу и пользователя, которого хотите удалить из этой группы."
 	read group user
 	userdel -- "$user" "$group"
-	if [ $? -eq 0 ]
+	result=$?
+	if [ $result -eq 0 ]
 	then
 		echo "Успешно."
 	fi
+	return $result
 }

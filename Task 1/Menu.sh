@@ -30,8 +30,9 @@ function repeat
 # Аргументами являются последовательно пункты меню и команды, которые нужно выполнить.
 # Ключ --title= задает имя меню (выводится в начале).
 # Ключ --quit= задает описание для выхода из меню.
+# Ключ --help= задает справочную информацию для данного меню.
 # Пример:
-# $menu Red "echo Red chosen" Blue "echo Blue chosen" --title="Red and Blue menu" --quit="Color everything in black"
+# $menu --title="Red and Blue menu" --quit="Color everything in black" --help="Print!" Red "echo Red chosen" Blue "echo Blue chosen"
 function menu
 {
 
@@ -57,6 +58,11 @@ function menu
 		elif [[ "$arg" = --quit=* ]]
 		then
 			quit=${arg:7}
+
+		# Ключ --help задает то, что будет выведено при вводе help.
+		elif [[ "$arg" = --help=* ]]
+		then
+			help_info=${arg:7}
 
 		# Если пунктов и функций одинаковое число, значит следующий аргумент - пункт меню.
 		elif [ $item_number -eq $func_number ]
@@ -84,12 +90,20 @@ function menu
 	while :
 	do
 		# Вывод меню.
+
+		# Вывод заглавия.
 		echo $title
+		echo
+		
+		# Вывод пунктов меню.
 		for ((i=1; i-item_number; i++))
 		do
-			printf '%i. %s\n' $i ${items[i]}
+			printf '%i. %s\n' $i "${items[i]}"
 		done
 		printf 'q. %s\n\n' "$quit"
+
+		# Вывод уведомления о том, что в данном меню можно воспользовать help'ом.
+		echo "Вы можете ввести help для получения справочной информации о данном меню."
 
 		# Обработка ответа пользователя.
 		while :
@@ -101,16 +115,22 @@ function menu
 			then
 				return 0
 
+			# Проверка на справочную информацию.
+			elif [ "$answer" = "help" ]
+			then
+				echo "$help_info"
+
 			# Проверка на корректный номер пункта.
 			elif [[ $answer =~ ^[0-9]+$ ]] && (( answer >= 1 && answer < item_number ))
 			then
 				echo
-				${funcs[answer]}
+				repeat ${funcs[answer]}
 				echo
 				break
 
+			# В противном случае пользователь ввел какую-то абракадабру.
 			else
-				echo "Не удалось распознать выбор. Введите номер нужного пункта меню или q для выхода из этого меню."
+				echo "Не удалось распознать выбор. Введите номер нужного пункта меню, q для выхода из этого меню или help для получения справочной информации."
 			fi
 		done
 	done
