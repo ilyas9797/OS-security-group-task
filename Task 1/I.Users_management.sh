@@ -3,14 +3,14 @@
 # Импорт полезных функций.
 . Menu.sh
 
-function user_management
+function users_management
 {
 	title='Меню управления пользователями.'
-	help_info='Здесь вы можете добавлять и  удалять пользователей.'
+	help_info='Здесь вы можете добавлять и удалять пользователей.'
 	quit='В главное меню.'
 	option1='Добавить пользователя.'
 	option2='Удалить пользователя.'
-	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" add_user "$option2" delete_user 
+	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" "repeat add_user" "$option2" "repeat delete_user"
 }
 
 function add_user
@@ -38,7 +38,7 @@ function delete_user
 		echo "Отказ в удалении"
 		return 0
 	fi
-	#Домашняя папка
+	# Домашняя папка
 	echo "Удалить домашний каталог пользователя y/N?"
 	read reply
 	if [ $reply = "y" ]
@@ -53,3 +53,6 @@ function delete_user
 	fi
 	return $result
 }
+
+# Собственно запуск скрипта, состоящий только из вызова меню.
+users_management
