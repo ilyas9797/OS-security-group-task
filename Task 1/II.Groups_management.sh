@@ -53,12 +53,8 @@ function add_user_to_group
 {
 	echo "Введите группу и пользователя, которого хотите добавить в эту группу(через пробел)."
 	read group user
-	useradd -aG -- "$user" "$group"
+	gpasswd --add "$user" -- "$group"
 	result=$?
-	if [ $result -eq 0 ]
-	then
-		echo "Успешно."
-	fi
 	return $result
 }
 
@@ -66,12 +62,8 @@ function delete_user_from_group
 {
 	echo "Введите группу и пользователя, которого хотите удалить из этой группы."
 	read group user
-	userdel -- "$user" "$group"
+	gpasswd --delete "$user" -- "$group"
 	result=$?
-	if [ $result -eq 0 ]
-	then
-		echo "Успешно."
-	fi
 	return $result
 }
 
