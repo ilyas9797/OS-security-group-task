@@ -3,15 +3,14 @@
 # Импорт полезных функций.
 . Menu.sh
 
-function groups_management
+function user_management
 {
-	title='Меню управления группами.'
-	help_info='Здесь вы можете добавлять, удалять группы и изменять их состав'
+	title='Меню управления пользователями.'
+	help_info='Здесь вы можете добавлять и  удалять пользователей.'
 	quit='В главное меню.'
-	option1='Добавить группу.'
-	option2='Удалить группу.'
-	option3='Изменить состав группы.'
-	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" add_group "$option2" delete_group "$option3" change_group
+	option1='Добавить пользователя.'
+	option2='Удалить пользователя.'
+	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" add_user "$option2" delete_user 
 }
 
 function add_user
