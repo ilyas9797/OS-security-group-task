@@ -68,4 +68,4 @@ function delete_user_from_group
 }
 
 # Собственно запуск скрипта, состоящий только из вызова меню.
-groups_management
+groups_management $*

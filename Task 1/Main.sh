@@ -39,7 +39,8 @@ function main
 	option2='Управление группами.'
 	action2="bash II.Groups_management.sh"
 	option3='Поиск пользователей или групп.'
-	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" "$action1" "$option2" "$action2" "$option3" "echo Не сделано"
+	action3='bash III.Groups_users_search.sh'
+	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" "$action1" "$option2" "$action2" "$option3" "$action3"
 }
 
 # Запуск скрипта.

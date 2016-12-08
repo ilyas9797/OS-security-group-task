@@ -30,7 +30,6 @@ function delete_user
 {
 	echo "Введите имя или ID пользователя, которого хотите удалить."
 	read user_to_delete
-
 	# Уточнение.
 	printf "Удалить пользователя %s? (y/N)" "$user_to_delete"
 	read reply
@@ -39,7 +38,6 @@ function delete_user
 		echo "Вы решили не удалять."
 		return 0
 	fi
-
 	# Домашняя папка
 	echo "Удалить домашний каталог пользователя? (y/N)"
 	read reply
@@ -49,7 +47,6 @@ function delete_user
 	else
 		key=" "
 	fi
-
 	# Удаление пользователя.
 	userdel $key -- "$user_to_delete"
 	result=$?
