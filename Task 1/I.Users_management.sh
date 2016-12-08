@@ -2,6 +2,7 @@
 
 # Импорт полезных функций.
 . Menu.sh
+. Task_I_c.sh
 
 function users_management
 {
@@ -10,7 +11,9 @@ function users_management
 	quit='В главное меню.'
 	option1='Добавить пользователя.'
 	option2='Удалить пользователя.'
-	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" "repeat add_user" "$option2" "repeat delete_user"
+	option3='Блокировка/разблокировка пользователя.'
+	action3="repeat lock_or_unlock_user"
+	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" "repeat add_user" "$option2" "repeat delete_user" "$option3" "$action3"
 }
 
 function add_user
@@ -58,4 +61,4 @@ function delete_user
 }
 
 # Собственно запуск скрипта, состоящий только из вызова меню.
-users_management
+users_management $*
