@@ -18,7 +18,7 @@ function acting_users
 		done;
 		if [ "${a[2]}" -ge "1000" ]; then
 			let c+=1; users[$c]=${a[1]};
-			echo "$c. ${a[1]}";
+			#echo "$c. ${a[1]}";
 		fi;
 	done < lab_testing
 	
@@ -27,47 +27,4 @@ function acting_users
 	
         #удаляем промежуточный файл lab_testing
 	rm -f lab_testing
-
-        #записываем номера заблокированных пользователей в locked
-        #разблокированных в unlocked
-        n1=0;
-        n2=0;
-        c=0;
-        for i in ${users[@]}; do
-                flag=2;
-                cat /etc/shadow | grep "$i"|sed 's/:/ /g' > new;
-                read s < new;
-                rm -f new;
-                let k=0
-                while [ $k -lt 15 ]; do
-                           (( k++ ));
-                           if [ "${s:$k:1}" == "!" ]; then
-                               flag=1;
-                           fi;
-                done
-                if [ "$flag" -eq 1 ]; then
-                           # пользователь заблокирован
-                           let c+=1
-                           ((n1++))
-                           locked[$n1]=$c
-                fi
-                if [ "$flag" -eq 2 ]; then
-                           # пользователь разблокирован
-                           let c+=1
-                           ((n2++))
-                           unlocked[$n2]=$c
-                fi
-        done
-
-        #вывод заблокированных пользователей
-        echo "из них заблокированы:"
-        for i in ${locked[@]}; do
-                echo "$i. ${users[$i]}";
-        done
-
-        #вывод заблокированных пользователей
-        echo "разблокированные пользователи:"
-        for i in ${unlocked[@]}; do
-                echo "$i. ${users[$i]}";
-        done
 }
