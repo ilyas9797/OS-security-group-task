@@ -30,5 +30,3 @@ function change_password
 	passwd "$user"
 	return $?
 }
-
-change_password $*

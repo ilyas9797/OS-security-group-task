@@ -78,12 +78,12 @@ function lock_or_unlock_user
         fi;
         if [ "$flag" -eq 1 ]; then           
               echo "разблокируем пользователя";
-              #usermod -U "$user_name";
+              usermod -U "$user_name";
               echo "Успешно";
         fi;
         if [ "$flag" -eq 2 ]; then                         
               echo "блокируем пользователя";
-              #usermod -L "$user_name";
+              usermod -L "$user_name";
               echo "Успешно";
         fi;
 }

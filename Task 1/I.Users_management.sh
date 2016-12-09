@@ -3,6 +3,7 @@
 # Импорт полезных функций.
 . Menu.sh
 . Task_I_c.sh
+. Task_I_e.sh
 
 function users_management
 {
@@ -13,7 +14,11 @@ function users_management
 	option2='Удалить пользователя.'
 	option3='Блокировка/разблокировка пользователя.'
 	action3="repeat lock_or_unlock_user"
-	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" "repeat add_user" "$option2" "repeat delete_user" "$option3" "$action3"
+	option4="Добавить пользователя в группу."
+	action4="echo not done yet"
+	option5="Смена пароля пользователя."
+	action5="repeat change_password"
+	menu --title="$title" --help="$help_info" --quit="$quit" "$option1" "repeat add_user" "$option2" "repeat delete_user" "$option3" "$action3" "$option4" "$action4" "$option5" "$action5"
 }
 
 function add_user

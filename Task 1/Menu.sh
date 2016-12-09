@@ -127,7 +127,7 @@ function menu
 				echo
 
 			# Проверка на корректный номер пункта.
-			elif [[ $answer =~ ^[0-9]+$ ]] && (( answer >= 1 && answer < item_number ))
+			elif [[ "$answer" =~ ^[0-9]+$ ]] && (( answer >= 1 && answer < item_number ))
 			then
 				echo
 				${funcs[answer]}
