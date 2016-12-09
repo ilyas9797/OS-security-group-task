@@ -9,6 +9,36 @@ function lock_or_unlock_user
         # Нужно для получения списка существующих пользователей.
         acting_users
 
+        #записываем номера заблокированных и незаблокированных пользователей 
+        n1=0;
+        n2=0;
+        c=0;
+        for i in ${users[@]}; do
+                flag=2;
+                cat /etc/shadow | grep "$i"|sed 's/:/ /g' > new;
+                read s < new;
+                rm -f new;
+                let k=0
+                while [ $k -lt 15 ]; do
+                           (( k++ ));
+                           if [ "${s:$k:1}" == "!" ]; then
+                               flag=1;
+                           fi;
+                done
+                if [ "$flag" -eq 1 ]; then
+                           # пользователь заблокирован
+                           let c+=1
+                           echo "$c. $i (заблокирован)"; 
+                fi
+                if [ "$flag" -eq 2 ]; then
+                           # пользователь разблокирован
+                           let c+=1
+                           echo "$c. $i";                          
+                fi
+        done
+
+
+
         echo "введите имя пользователя, которого хотите заблокировать/разблокировать ИЛИ его номер:"
 	read user_name
         flag="0"
