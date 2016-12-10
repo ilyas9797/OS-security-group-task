@@ -36,8 +36,27 @@ function add_user
 
 function delete_user
 {
-	echo "Введите имя или ID пользователя, которого хотите удалить."
-	read user_to_delete
+	acting_users > /dev/null 2>&1
+	# Теперь в users список пользователей.
+	for ((i=1; i<=${#users[@]}; ++i))
+	do
+		echo $i "${users[i]}"
+	done
+
+	echo "Введите имя пользователя, которого вы хотите удалить,  или его порядковый номер."
+	read reply
+	
+	# Распознание порядкового номера.
+	if [[ "$reply" =~ ^[0-9]+$ ]] && (( reply >= 1 && reply <= ${#users[@]} ))
+	then
+		user=${users[reply]}
+	elif [[ "$reply" =~ ^[0-9]+$ ]]
+	then
+		echo "Введен неправильный порядковый номер." >&2
+		return 1
+	else
+		user="$reply"
+	fi
 	# Уточнение.
 	printf "Удалить пользователя %s? (y/N)" "$user_to_delete"
 	read reply
@@ -56,6 +75,7 @@ function delete_user
 		key=" "
 	fi
 	# Удаление пользователя.
+	user_to_delete=$user
 	userdel $key -- "$user_to_delete"
 	result=$?
 	if [ $result -eq 0 ]
